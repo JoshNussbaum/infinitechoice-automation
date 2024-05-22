@@ -4,7 +4,7 @@ export default class DatePickerDropDown {
     page: Page;
     readonly datePickerDropDown: Locator
     readonly nextMonthButton: Locator
-    readonly calendarDayItem = (day: string) => this.datePickerDropDown.locator(`//td[@class='day'][text()=${day}]`)
+    readonly calendarDayItem = (day: number) => this.datePickerDropDown.locator(`//td[@class='day'][text()=${day}]`)
 
     constructor(page: Page) {
         this.page = page;
@@ -16,15 +16,15 @@ export default class DatePickerDropDown {
         await this.nextMonthButton.click()
     }
 
-    async clickCalendarDay(day: string) {
+    async clickCalendarDay(day: number) {
         await this.calendarDayItem(day).click()
     }
 
-    public async selectCheckInDate(day: string) {
+    public async selectCheckInDate(day: number) {
         await this.clickCalendarDay(day)
     }
 
-    public async selectCheckOutDate(day: string) {
+    public async selectCheckOutDate(day: number) {
         await this.clickCalendarDay(day)
     }
 

@@ -5,13 +5,15 @@ import PaymentInformation from '../models/payment-information';
 import ReservationDetails from '../models/reservation-details';
 
 const invalidUserReservationDetails = [
-    new ReservationDetails('Aria hotel Las Vegas', '15', '18', 1, 0, 1, new User(1, 'Test', 'User', 'testguestuser@guestreservation.com', '1234567890', '1234 test street', 'San Fransisco', '12345', new PaymentInformation('4111111111111111', '01', '2025', '123', 'test', 'user', 'visa')))
+    new ReservationDetails('Aria hotel Las Vegas', 14, 20, 1, 0, 1, new User(1, 'Test', 'User', 'testguestuser@guestreservation.com', '1234567890', '1234 test street', 'San Fransisco', '12345', new PaymentInformation('4111111111111111', '01', '2025', '123', 'test', 'user', 'visa')))
 ]
 
 invalidUserReservationDetails.forEach((reservationDetails) => {
     test(`Search for hotel on google, select guestreservations, checkout with user ID: ${reservationDetails.user.id} using test credit card, verify error message`, async ({ googlePage, hotelBookingPage, hotelCheckoutPage }) => {
         // Given
         const numberOfRooms = 1
+        const randomStartDateBuffer = Math.floor(Math.random() * 5)
+        const randomEndDateBuffer = Math.floor(Math.random() * 5)
 
         // When
         await googlePage.open();
@@ -23,9 +25,10 @@ invalidUserReservationDetails.forEach((reservationDetails) => {
         }
         await googlePage.clickSearchResultLink('guestreservations.com');
 
-        await hotelBookingPage.selectDatesAndFindRooms(reservationDetails.checkInDate, reservationDetails.checkOutDate)
+        await hotelBookingPage.selectDatesAndFindRooms(reservationDetails.checkInDate + randomStartDateBuffer, reservationDetails.checkOutDate + randomEndDateBuffer)
         await hotelBookingPage.waitForLoad();
 
+        // If booking is no longer available we should try the next booking
         await hotelBookingPage.clickFirstBookNowButton();
         await hotelCheckoutPage.waitForLoad();
 

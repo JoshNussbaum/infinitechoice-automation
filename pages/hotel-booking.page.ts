@@ -20,7 +20,7 @@ export default class HotelBookingPage {
         await expect(this.loadingPage).toHaveCount(0)
     }
 
-    async selectDatesAndFindRooms(checkInDay: string, checkOutDay: string) {
+    async selectDatesAndFindRooms(checkInDay: number, checkOutDay: number) {
         await this.hotelBookingModal.selectCheckInDate(checkInDay)
         await this.hotelBookingModal.selectCheckOutDate(checkOutDay)
         await this.hotelBookingModal.clickFindRoomsButton()

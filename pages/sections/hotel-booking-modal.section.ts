@@ -19,13 +19,13 @@ export default class HotelBookingModalSection {
 
     }
 
-    public async selectCheckInDate(day: string) {
+    public async selectCheckInDate(day: number) {
         await this.checkInDateInput.click()
         await this.datePickerDropDown.clickNextMonthButton()
         await this.datePickerDropDown.selectCheckInDate(day)
     }
 
-    public async selectCheckOutDate(day: string) {
+    public async selectCheckOutDate(day: number) {
         await this.checkOutDateInput.click()
         await this.datePickerDropDown.selectCheckOutDate(day)
     }
